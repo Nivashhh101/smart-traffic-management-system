@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Traffic Management System</title>
+    <link rel="stylesheet" href="/styles.css?v=20260527">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <section>
+          <p class="eyebrow">Live city operations</p>
+          <h1>Smart Traffic Management System</h1>
+        </section>
+        <section class="topbar-actions" aria-label="System controls">
+          <div class="connection-pill" id="connectionState">
+            <span class="pulse"></span>
+            <span>Connecting</span>
+          </div>
+          <button class="icon-button" id="resetButton" type="button" aria-label="Clear incidents" title="Clear incidents">
+            <span aria-hidden="true">R</span>
+          </button>
+        </section>
+      </header>
+
+      <section class="kpi-grid" aria-label="Traffic metrics">
+        <article class="metric-card">
+          <span>Total flow</span>
+          <strong id="totalFlow">0</strong>
+          <small>vehicles per hour</small>
+        </article>
+        <article class="metric-card">
+          <span>Average speed</span>
+          <strong id="avgSpeed">0</strong>
+          <small>km/h</small>
+        </article>
+        <article class="metric-card">
+          <span>Average wait</span>
+          <strong id="avgWait">0</strong>
+          <small>seconds</small>
+        </article>
+        <article class="metric-card accent">
+          <span>Signal reliability</span>
+          <strong id="reliability">0</strong>
+          <small>percent</small>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <section class="map-panel" aria-label="Live traffic network">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">City network</p>
+              <h2>Adaptive signal map</h2>
+            </div>
+            <div class="map-legend" aria-label="Congestion legend">
+              <span><i class="legend-dot smooth"></i>Smooth</span>
+              <span><i class="legend-dot busy"></i>Busy</span>
+              <span><i class="legend-dot critical"></i>Critical</span>
+            </div>
+          </div>
+          <div class="city-map-wrap">
+            <canvas id="trafficCanvas" width="980" height="620" aria-label="Animated traffic map"></canvas>
+            <div id="mapNodes" class="map-nodes"></div>
+          </div>
+        </section>
+
+        <aside class="side-panel" aria-label="Operations panel">
+          <section class="control-panel">
+            <div class="panel-heading compact">
+              <div>
+                <p class="eyebrow">Strategy</p>
+                <h2>Signal control</h2>
+              </div>
+            </div>
+            <div class="segmented" role="group" aria-label="Optimization strategy">
+              <button class="segment active" type="button" data-strategy="adaptive">Adaptive</button>
+              <button class="segment" type="button" data-strategy="emergency-priority">Emergency</button>
+              <button class="segment" type="button" data-strategy="eco">Eco</button>
+            </div>
+            <label class="field-label" for="prioritySelect">Priority intersection</label>
+            <select id="prioritySelect"></select>
+            <label class="field-label" for="manualSelect">Manual hold</label>
+            <select id="manualSelect">
+              <option value="">Auto control</option>
+            </select>
+          </section>
+
+          <section class="chart-panel">
+            <div class="panel-heading compact">
+              <div>
+                <p class="eyebrow">Last 30 seconds</p>
+                <h2>Congestion trend</h2>
+              </div>
+              <strong id="congestionIndex" class="index-badge">0.00</strong>
+            </div>
+            <canvas id="trendCanvas" width="520" height="180" aria-label="Congestion trend chart"></canvas>
+          </section>
+
+          <section class="incident-panel">
+            <div class="panel-heading compact">
+              <div>
+                <p class="eyebrow">Response</p>
+                <h2>Incidents</h2>
+              </div>
+              <button class="small-button" id="addIncidentButton" type="button">Add</button>
+            </div>
+            <div id="incidentList" class="incident-list"></div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="table-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Intersections</p>
+            <h2>Live sensor table</h2>
+          </div>
+          <div class="mini-stats">
+            <span><b id="optimizedSignals">0</b> optimized</span>
+            <span><b id="activeIncidents">0</b> active incidents</span>
+            <span><b id="co2Saved">0</b> kg CO2 saved</span>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Intersection</th>
+                <th>Corridor</th>
+                <th>Signal</th>
+                <th>Flow</th>
+                <th>Queue</th>
+                <th>Speed</th>
+                <th>Wait</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="intersectionRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js?v=20260527"></script>
+  </body>
+</html>
